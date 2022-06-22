@@ -1,0 +1,31 @@
+{
+  "name": "@curdman/toolkits",
+  "version": "0.0.1",
+  "description": "A series of crud toolkits",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/easycrud/toolkits.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/easycrud/toolkits/issues"
+  },
+  "homepage": "https://github.com/easycrud/toolkits#readme",
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "bin": {
+    "json2dbschema": "./bin/cli.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
