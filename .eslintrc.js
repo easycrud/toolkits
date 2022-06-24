@@ -14,6 +14,7 @@ module.exports = {
     'semi': 'error',
     'indent': ['error', 2],
     'max-len': ['error', 120],
+    'object-curly-spacing': ['error', 'always'],
   },
 
   'ignorePatterns': ['toolkits.d.ts'],
