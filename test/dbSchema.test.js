@@ -8,7 +8,7 @@ const obj = {
       'type': 'int',
       'length': 11,
       'primary': true,
-      'autoIncrement': 1,
+      'autoIncrement': true,
     },
     {
       'name': 'username',
