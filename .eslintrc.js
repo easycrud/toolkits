@@ -16,5 +16,5 @@ module.exports = {
     'max-len': ['error', 120],
   },
 
-  'ignorePatterns': ['toolkits.d.ts'],
+  'ignorePatterns': ['index.d.ts'],
 };

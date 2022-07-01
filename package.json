@@ -1,5 +1,5 @@
 {
-  "name": "@curdman/toolkits",
+  "name": "@easycrud/toolkits",
   "version": "0.0.1",
   "description": "A series of crud toolkits",
   "main": "index.js",

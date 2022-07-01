@@ -102,29 +102,29 @@ interface TableDefinition {
   options?: TableOptions;
 }
 
-/**
- * Parser: parse and format the table definition using JSON
- */
-declare class Parser {
-  tables: TableDefinition[];
-  constructor();
-  /**
-   * Accept a file contains a table definition or a directory path where the files are table definitions.
-   * Parse the files and format, store into this.tables.
-   */
-  parse(filePath: string): void;
-  /**
-   * Accept a file which contains a table definition.
-   * Parse the file and format, store into this.tables.
-   */
-  parseFile(filePath: string): void;
-  /**
-   * Parse a table definition, store it into this.tables.
-   */
-  parseContent(content: ColumnDefinition[] | TableDefinition, fileName?: string): void;
-}
-
 declare namespace toolkits {
+  /**
+   * Parser: parse and format the table definition using JSON
+   */
+  class Parser {
+    tables: TableDefinition[];
+    constructor();
+    /**
+     * Accept a file contains a table definition or a directory path where the files are table definitions.
+     * Parse the files and format, store into this.tables.
+     */
+    parse(filePath: string): void;
+    /**
+     * Accept a file which contains a table definition.
+     * Parse the file and format, store into this.tables.
+     */
+    parseFile(filePath: string): void;
+    /**
+     * Parse a table definition, store it into this.tables.
+     */
+    parseContent(content: ColumnDefinition[] | TableDefinition, fileName?: string): void;
+  }
+
   /**
    * Convert a table definition JSON to mysql CREATE table sql statement.
    */

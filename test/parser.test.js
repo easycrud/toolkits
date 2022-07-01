@@ -1,10 +1,9 @@
 const Parser = require('../lib/parser');
 
 test('parseContent empty array content', () => {
-  console.error = jest.fn();
   const parser = new Parser();
-  parser.parseContent([], 'example');
-  expect(console.error.mock.calls[0][1]).toContain('table columns configure error');
+  expect(() => parser.parseContent([], 'example'))
+    .toThrowError('table columns configure error');
 });
 
 test('parseContent array content', () => {
@@ -41,8 +40,8 @@ test('parseContent array content', () => {
 test('parseContent empty object content', () => {
   console.error = jest.fn();
   const parser = new Parser();
-  parser.parseContent({columns: []}, 'example');
-  expect(console.error.mock.calls[0][1]).toContain('table columns configure error');
+  expect(() => parser.parseContent({columns: []}, 'example'))
+    .toThrowError('table columns configure error');
 });
 
 test('parseContent object content', () => {
@@ -89,10 +88,13 @@ test('parseContent object content', () => {
 });
 
 test('parseFile invalid file path', async () => {
-  console.error = jest.fn();
-  const parser = new Parser();
-  await parser.parseFile('test/schemas/invalid.json');
-  expect(console.error.mock.calls[0][0]).toContain(`Parse file test/schemas/invalid.json error`);
+  expect.assertions(1);
+  try {
+    const parser = new Parser();
+    await parser.parseFile('test/schemas/invalid.json');
+  } catch (e) {
+    expect(e.message).toMatch(`no such file or directory, open 'test/schemas/invalid.json'`);
+  }
 });
 
 test('parseFile', async () => {
