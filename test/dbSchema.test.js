@@ -1,4 +1,4 @@
-const { json2mysql } = require('../lib/dbSchema');
+const {json2mysql} = require('../lib/dbSchema');
 
 const obj = {
   tableName: 'users',

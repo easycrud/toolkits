@@ -4,7 +4,7 @@ const program = require('commander');
 const fs = require('fs');
 const pkg = require('../package.json');
 const Parser = require('../lib/parser');
-const { json2mysql } = require('../lib/dbSchema');
+const {json2mysql} = require('../lib/dbSchema');
 
 program
   .version(pkg.version)
