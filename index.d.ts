@@ -38,6 +38,10 @@ interface ColumnDefinition {
    * The content will be set when a column is on updated. Usually 'CURRENT_TIMESTAMP'
    */
   onUpdate?: string;
+  /**
+   * The alias of a column, usually used in sql statements and response messages.
+   */
+  alias?: string;
 }
 
 /**
@@ -62,10 +66,21 @@ interface IndexDefinition {
   primary?: boolean;
 }
 
-/**
- * Extra options for table creation
- */
-interface TableOptions {
+declare namespace toolkits {
+  /**
+   * Extra options for table definition
+   */
+  interface TableOptions {
+    /**
+     * The database that this table belongs to.
+     */
+    database?: string;
+    /**
+     * The method use to format the column names. Default camel. 
+     * Notice: the alias property will be use first if it is set.
+     */
+    columnFormatter?: 'snake' | 'camel' | 'kebab' | 'none' | columnFormatter;
+    /* The following properties are the extra options for table creation */
     /**
      * If true, drop table if it exists before create. Default false.
      */
@@ -78,31 +93,33 @@ interface TableOptions {
      * Set where the auto increment key start from.
      */
     autoIncrement?: number;
-}
-
-/**
- * Describe a table using JSON
- */
-interface TableDefinition {
-   /**
-   * The name of a table.
-   */
-  tableName: string;
-   /**
-   * The columns of a table.
-   */
-  columns: ColumnDefinition[];
-   /**
-   * The indexes of a table. The oject keys are the index names.
-   */
-  indexes?: { [key: string]: IndexDefinition[] };
+  }
   /**
-   * Extra options for table creation
+   * Describe a table using JSON
    */
-  options?: TableOptions;
-}
+  interface TableDefinition {
+    /**
+      * The name of a table.
+      */
+    tableName: string;
+    /**
+     * The alias of a table.
+     */
+    alias?: string;
+    /**
+     * The columns of a table.
+     */
+    columns: ColumnDefinition[];
+    /**
+     * The indexes of a table. The oject keys are the index names.
+     */
+    indexes?: { [key: string]: IndexDefinition[] };
+    /**
+     * Extra options for table creation
+     */
+    options?: TableOptions;
+  }
 
-declare namespace toolkits {
   /**
    * Parser: parse and format the table definition using JSON
    */
