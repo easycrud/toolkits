@@ -54,10 +54,10 @@ const sql = `CREATE TABLE IF NOT EXISTS \`users\`(
 \`email\` VARCHAR(512) NOT NULL COMMENT '邮箱',
 \`password\` VARCHAR(512) NOT NULL COMMENT '密码',
 \`update_time\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-UNIQUE KEY 'idx_user'(\`username\`,\`email\`),
-KEY 'idx_email'(\`email\`),
-PRIMARY KEY 'id'(\`id\`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8`;
+UNIQUE KEY idx_user(\`username\`,\`email\`),
+KEY idx_email(\`email\`),
+PRIMARY KEY id(\`id\`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;`;
 
 const Parser = require('../lib/parser');
 const parser = new Parser();

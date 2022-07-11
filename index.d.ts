@@ -66,6 +66,8 @@ interface IndexDefinition {
   primary?: boolean;
 }
 
+type columnFormatter = (col: string) => string;
+
 declare namespace toolkits {
   /**
    * Extra options for table definition
