@@ -1,6 +1,6 @@
 {
   "name": "@easycrud/toolkits",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A series of crud toolkits",
   "main": "index.js",
   "scripts": {
@@ -31,5 +31,8 @@
   },
   "dependencies": {
     "commander": "^9.3.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
   }
 }
