@@ -21,7 +21,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: |
           rm package-lock.json
-          npm ci
+          npm i
       - run: npm test
       - run: npm publish
         env:
