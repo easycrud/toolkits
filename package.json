@@ -17,10 +17,6 @@
     "url": "https://github.com/easycrud/toolkits/issues"
   },
   "homepage": "https://github.com/easycrud/toolkits#readme",
-  "files": [
-    "bin",
-    "lib"
-  ],
   "bin": {
     "crud-json2db": "./bin/json2db.js"
   },
