@@ -4,13 +4,17 @@ const program = require('commander');
 const fs = require('fs');
 const pkg = require('../package.json');
 const Parser = require('../lib/parser');
-const {json2mysql} = require('../lib/dbSchema');
+const {json2mysql, json2pgsql} = require('../lib/dbSchema');
+const converter = {
+  mysql: json2mysql,
+  pgsql: json2pgsql,
+};
 
 program
   .version(pkg.version)
   .option('-p, --path [path]', 'set file path')
   .option('-o, --out [out]', 'set output file path, default stdout')
-  .option('-t, --type [type]', 'set db type, just support mysql currently')
+  .option('-t, --type [type]', 'set db type, just support mysql and pgsql currently')
   .parse(process.argv);
 
 const config = {
@@ -26,8 +30,9 @@ Object.keys(config).forEach((key) => {
   }
 });
 
-// Just support mysql currently
-config.type = 'mysql';
+if (!config.type) {
+  config.type = 'mysql';
+}
 
 if (config.path) {
   console.log(`use file path: ${config.path}\n`);
@@ -40,7 +45,7 @@ const result = [];
 const parser = new Parser();
 parser.parse(config.path).then(() => {
   parser.tables.forEach((t) => {
-    result.push(json2mysql(t));
+    result.push(converter[config.type](t));
   });
 
   if (config.out === 'stdout') {

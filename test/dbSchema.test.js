@@ -1,4 +1,4 @@
-const {json2mysql} = require('../lib/dbSchema');
+const {json2mysql, json2pgsql} = require('../lib/dbSchema');
 
 const obj = {
   tableName: 'users',
@@ -48,7 +48,7 @@ const obj = {
   },
 };
 
-const sql = `CREATE TABLE IF NOT EXISTS \`users\`(
+const mysql = `CREATE TABLE IF NOT EXISTS \`users\`(
 \`id\` INT(11) AUTO_INCREMENT NOT NULL,
 \`username\` VARCHAR(256) NOT NULL DEFAULT '' COMMENT '用户名',
 \`email\` VARCHAR(512) NOT NULL COMMENT '邮箱',
@@ -64,8 +64,29 @@ const parser = new Parser();
 parser.parseContent(obj);
 
 test('json2mysql', () => {
-  expect(json2mysql(parser.tables[0])).toBe(sql);
+  expect(json2mysql(parser.tables[0])).toBe(mysql);
 });
+
+const pgsql = `CREATE TABLE IF NOT EXISTS users(
+id INT(11) SERIAL NOT NULL,
+username VARCHAR(256) NOT NULL DEFAULT '',
+email VARCHAR(512) NOT NULL,
+password VARCHAR(512) NOT NULL,
+update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+CONSTRAINT users_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX users_idx_user ON users (username,email);
+CREATE INDEX users_idx_email ON users (email);
+COMMENT ON COLUMN users.username IS '用户名';
+COMMENT ON COLUMN users.email IS '邮箱';
+COMMENT ON COLUMN users.password IS '密码';
+COMMENT ON COLUMN users.update_time IS '更新时间';
+`;
+
+test('json2pgsql', () => {
+  expect(json2pgsql(parser.tables[0])).toBe(pgsql);
+});
+
 
 test('json2mysql wrong index', () => {
   const wrongIdx = {
