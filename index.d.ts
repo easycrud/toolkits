@@ -86,7 +86,7 @@ declare namespace toolkits {
     /**
      * If true, drop table if it exists before create. Default false.
      */
-    overwrite?: boolean;
+    dropIfExists?: boolean;
     /**
      * Set table engine. Default 'InnoDB'.
      */
