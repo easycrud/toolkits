@@ -145,9 +145,13 @@ declare namespace toolkits {
   }
 
   /**
-   * Convert a table definition JSON to mysql CREATE table sql statement.
+   * Convert a table definition JSON to MySQL CREATE table sql statement.
    */
   function json2mysql(obj: TableDefinition | string) : string;
+  /**
+   * Convert a table definition JSON to PostgreSQL CREATE table sql statement.
+   */
+  function json2pgsql(obj: TableDefinition | string) : string;
 }
 
 export = toolkits;
