@@ -1,74 +1,73 @@
-/**
- * Describe a table column using JSON
- */
-interface ColumnDefinition {
-  /**
-   * Column name
-   */
-  name: string;
-  /**
-   * Column type: varchar, int, timestamp, etc.
-   */
-  type: string;
-  /**
-   * The length of a column
-   */
-  length?: number;
-  /**
-   * If a column is primary key. Default false.
-   */
-  primary?: boolean;
-  /**
-   * If a column is set to auto increment.  Default false.
-   */
-  autoIncrement?: boolean;
-  /**
-   * If a column is nullable.  Default false.
-   */
-  nullable?: boolean;
-  /**
-   * The default content of a column
-   */
-  default?: any;
-  /**
-   * The comment of a column
-   */
-  comment?: string;
-  /**
-   * The content will be set when a column is on updated. Usually 'CURRENT_TIMESTAMP'
-   */
-  onUpdate?: string;
-  /**
-   * The alias of a column, usually used in sql statements and response messages.
-   */
-  alias?: string;
-}
-
-/**
- * Describe a table index using JSON
- */
-interface IndexDefinition {
-  /**
-   * The columns to be indexed. It will be ignored if `column` is set.
-   */
-  columns: string[];
-  /**
-   * The columns to be indexed
-   */
-  column?: string;
-  /**
-   * If a index is unique. Default false.
-   */
-  unique?: boolean;
-  /**
-   * If a index is primary key. Default false.
-   */
-  primary?: boolean;
-}
-
-type columnFormatter = (col: string) => string;
-
 declare namespace toolkits {
+  /**
+   * Describe a table column using JSON
+   */
+  interface ColumnDefinition {
+    /**
+     * Column name
+     */
+    name: string;
+    /**
+     * Column type: varchar, int, timestamp, etc.
+     */
+    type: string;
+    /**
+     * The length of a column
+     */
+    length?: number;
+    /**
+     * If a column is primary key. Default false.
+     */
+    primary?: boolean;
+    /**
+     * If a column is set to auto increment.  Default false.
+     */
+    autoIncrement?: boolean;
+    /**
+     * If a column is nullable.  Default false.
+     */
+    nullable?: boolean;
+    /**
+     * The default content of a column
+     */
+    default?: any;
+    /**
+     * The comment of a column
+     */
+    comment?: string;
+    /**
+     * The content will be set when a column is on updated. Usually 'CURRENT_TIMESTAMP'
+     */
+    onUpdate?: string;
+    /**
+     * The alias of a column, usually used in sql statements and response messages.
+     */
+    alias?: string;
+  }
+
+  /**
+   * Describe a table index using JSON
+   */
+  interface IndexDefinition {
+    /**
+     * The columns to be indexed. It will be ignored if `column` is set.
+     */
+    columns: string[];
+    /**
+     * The columns to be indexed
+     */
+    column?: string;
+    /**
+     * If a index is unique. Default false.
+     */
+    unique?: boolean;
+    /**
+     * If a index is primary key. Default false.
+     */
+    primary?: boolean;
+  }
+
+  type columnFormatter = (col: string) => string;
   /**
    * Extra options for table definition
    */
@@ -125,6 +124,7 @@ declare namespace toolkits {
   /**
    * Parser: parse and format the table definition using JSON
    */
+  function parseContent(content: ColumnDefinition[] | TableDefinition, fileName?: string): TableDefinition;
   class Parser {
     tables: TableDefinition[];
     constructor();
