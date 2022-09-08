@@ -56,15 +56,15 @@ declare namespace toolkits {
     /**
      * The columns to be indexed
      */
-    column?: string;
+    column: string;
     /**
      * If a index is unique. Default false.
      */
-    unique?: boolean;
+    unique: boolean;
     /**
      * If a index is primary key. Default false.
      */
-    primary?: boolean;
+    primary: boolean;
   }
 
   type columnFormatter = (col: string) => string;
@@ -102,7 +102,7 @@ declare namespace toolkits {
     /**
       * The name of a table.
       */
-    tableName: string;
+    tableName?: string;
     /**
      * The alias of a table.
      */
@@ -114,7 +114,7 @@ declare namespace toolkits {
     /**
      * The indexes of a table. The oject keys are the index names.
      */
-    indexes?: { [key: string]: IndexDefinition[] };
+    indexes?: { [key: string]: Partial<IndexDefinition> };
     /**
      * Extra options for table creation
      */
