@@ -119,6 +119,10 @@ declare namespace toolkits {
      * Extra options for table creation
      */
     options?: TableOptions;
+    /**
+     * Primary keys getter
+     */
+    pk: string[]
   }
 
   /**
