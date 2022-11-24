@@ -128,7 +128,7 @@ declare namespace toolkits {
   /**
    * Parser: parse and format the table definition using JSON
    */
-  function parseContent(content: ColumnDefinition[] | TableDefinition, fileName?: string): TableDefinition;
+  function parseContent(def: Partial<TableDefinition> | ColumnDefinition[]): TableDefinition;
   class Parser {
     tables: TableDefinition[];
     constructor();
@@ -145,7 +145,7 @@ declare namespace toolkits {
     /**
      * Parse a table definition, store it into this.tables.
      */
-    parseContent(content: ColumnDefinition[] | TableDefinition, fileName?: string): void;
+    parseContent(def: Partial<TableDefinition> | ColumnDefinition[]): void;
   }
 
   /**
