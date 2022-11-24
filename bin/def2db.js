@@ -4,10 +4,10 @@ const program = require('commander');
 const fs = require('fs');
 const pkg = require('../package.json');
 const Parser = require('../lib/parser');
-const {json2mysql, json2pgsql} = require('../lib/dbSchema');
+const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
 const converter = {
-  mysql: json2mysql,
-  pgsql: json2pgsql,
+  mysql: def2mysql,
+  pgsql: def2pgsql,
 };
 
 program

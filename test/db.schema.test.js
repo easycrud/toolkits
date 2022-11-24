@@ -1,4 +1,4 @@
-const {json2mysql, json2pgsql} = require('../lib/dbSchema');
+const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
 
 const obj = {
   tableName: 'users',
@@ -63,8 +63,8 @@ const Parser = require('../lib/parser');
 const parser = new Parser();
 parser.parseContent(obj);
 
-test('json2mysql', () => {
-  expect(json2mysql(parser.tables[0])).toBe(mysql);
+test('def2mysql', () => {
+  expect(def2mysql(parser.tables[0])).toBe(mysql);
 });
 
 const pgsql = `CREATE TABLE IF NOT EXISTS users(
@@ -83,12 +83,12 @@ COMMENT ON COLUMN users.password IS '密码';
 COMMENT ON COLUMN users.update_time IS '更新时间';
 `;
 
-test('json2pgsql', () => {
-  expect(json2pgsql(parser.tables[0])).toBe(pgsql);
+test('def2pgsql', () => {
+  expect(def2pgsql(parser.tables[0])).toBe(pgsql);
 });
 
 
-test('json2mysql wrong index', () => {
+test('def2mysql wrong index', () => {
   const wrongIdx = {
     columns: ['wrong_col'],
   };
@@ -96,6 +96,6 @@ test('json2mysql wrong index', () => {
   wrongObj.indexes.wrong_idx = wrongIdx;
   const parser = new Parser();
   parser.parseContent(wrongObj);
-  expect(() => json2mysql(parser.tables[0]))
+  expect(() => def2mysql(parser.tables[0]))
     .toThrowError('table indexes include column wrong_col that does not configuire in columns');
 });
