@@ -1,6 +1,6 @@
 {
   "name": "@easycrud/toolkits",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "A series of crud toolkits",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/easycrud/toolkits#readme",
   "bin": {
-    "crud-json2db": "./bin/json2db.js"
+    "crud-def2db": "./bin/def2db.js"
   },
   "devDependencies": {
     "eslint": "^8.18.0",
