@@ -34,6 +34,7 @@ test('parseContent array content', () => {
         primary: true,
       },
     },
+    'pk': ['username'],
   });
 });
 
@@ -84,6 +85,7 @@ test('parseContent object content', () => {
         columns: ['username'],
       },
     },
+    'pk': ['username'],
   });
 });
 
@@ -117,6 +119,7 @@ test('parseFile', async () => {
         primary: true,
       },
     },
+    'pk': ['username'],
   });
 });
 
@@ -140,6 +143,7 @@ test('parse file', async () => {
         primary: true,
       },
     },
+    'pk': ['username'],
   });
 });
 
@@ -163,5 +167,6 @@ test('parse dir', async () => {
         primary: true,
       },
     },
+    'pk': ['username'],
   });
 });
