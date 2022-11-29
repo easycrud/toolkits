@@ -1,3 +1,5 @@
+import {ISchema} from "@formily/react";
+
 declare namespace toolkits {
   /**
    * Describe a table column using JSON
@@ -151,11 +153,21 @@ declare namespace toolkits {
   /**
    * Convert a table definition JSON to MySQL CREATE table sql statement.
    */
-  function json2mysql(obj: TableDefinition | string) : string;
+  function def2mysql(obj: TableDefinition | string) : string;
   /**
    * Convert a table definition JSON to PostgreSQL CREATE table sql statement.
    */
-  function json2pgsql(obj: TableDefinition | string) : string;
+  function def2pgsql(obj: TableDefinition | string) : string;
+  /**
+   * Convert a table definition JSON to standard JSON schema.
+   * https://json-schema.org/
+   */
+  function def2jsonschema(obj: TableDefinition | string) : Object;
+  /**
+   * Convert a table definition JSON to JSON schema of fomilyjs.
+   * https://formilyjs.org/
+   */
+  function def2formily(obj: TableDefinition | string) : ISchema;
 }
 
 export = toolkits;
