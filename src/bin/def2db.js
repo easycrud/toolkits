@@ -2,7 +2,7 @@
 
 const program = require('commander');
 const fs = require('fs');
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 const Parser = require('../lib/parser');
 const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
 const converter = {

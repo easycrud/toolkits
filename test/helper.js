@@ -1,4 +1,4 @@
-const Parser = require('../lib/parser');
+const Parser = require('../src/parser');
 
 async function getUserDef() {
   const parser = new Parser();

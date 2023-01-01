@@ -1,5 +1,5 @@
 const {makeExecutableSchema} = require('@graphql-tools/schema');
-const {def2graphql} = require('../lib/converter/graphql.schema');
+const {def2graphql} = require('../src/converter/graphql.schema');
 const {getUserDef} = require('./helper');
 
 const schema = makeExecutableSchema({
