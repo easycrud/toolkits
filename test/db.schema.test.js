@@ -1,52 +1,5 @@
 const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
-
-const obj = {
-  tableName: 'users',
-  columns: [
-    {
-      'name': 'id',
-      'type': 'int',
-      'length': 11,
-      'primary': true,
-      'autoIncrement': true,
-    },
-    {
-      'name': 'username',
-      'type': 'varchar',
-      'length': 256,
-      'default': '',
-      'comment': '用户名',
-    },
-    {
-      'name': 'email',
-      'type': 'varchar',
-      'length': 512,
-      'comment': '邮箱',
-    },
-    {
-      'name': 'password',
-      'type': 'varchar',
-      'length': 512,
-      'comment': '密码',
-    },
-    {
-      'name': 'update_time',
-      'type': 'timestamp',
-      'default': 'CURRENT_TIMESTAMP',
-      'onUpdate': 'CURRENT_TIMESTAMP',
-      'comment': '更新时间',
-    },
-  ],
-  indexes: {
-    idx_user: {
-      columns: ['username', 'email'],
-      unique: true,
-    },
-    idx_email: {
-      column: 'email',
-    },
-  },
-};
+const {getUserDef} = require('./helper');
 
 const mysql = `CREATE TABLE IF NOT EXISTS \`users\`(
 \`id\` INT(11) AUTO_INCREMENT NOT NULL,
@@ -59,12 +12,8 @@ KEY idx_email(\`email\`),
 PRIMARY KEY id(\`id\`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;`;
 
-const Parser = require('../lib/parser');
-const parser = new Parser();
-parser.parseContent(obj);
-
-test('def2mysql', () => {
-  expect(def2mysql(parser.tables[0])).toBe(mysql);
+test('def2mysql', async () => {
+  expect(def2mysql(await getUserDef())).toBe(mysql);
 });
 
 const pgsql = `CREATE TABLE IF NOT EXISTS users(
@@ -83,19 +32,17 @@ COMMENT ON COLUMN users.password IS '密码';
 COMMENT ON COLUMN users.update_time IS '更新时间';
 `;
 
-test('def2pgsql', () => {
-  expect(def2pgsql(parser.tables[0])).toBe(pgsql);
+test('def2pgsql', async () => {
+  expect(def2pgsql(await getUserDef())).toBe(pgsql);
 });
 
 
-test('def2mysql wrong index', () => {
+test('def2mysql wrong index', async () => {
   const wrongIdx = {
     columns: ['wrong_col'],
   };
-  const wrongObj = Object.assign({}, obj);
-  wrongObj.indexes.wrong_idx = wrongIdx;
-  const parser = new Parser();
-  parser.parseContent(wrongObj);
-  expect(() => def2mysql(parser.tables[0]))
+  const wrongDef = Object.assign({}, await getUserDef());
+  wrongDef.indexes.wrong_idx = wrongIdx;
+  expect(() => def2mysql(wrongDef))
     .toThrowError('table indexes include column wrong_col that does not configuire in columns');
 });
