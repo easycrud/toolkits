@@ -1,7 +1,8 @@
-const checkAndParse = require('./helper');
+import {TableSchema} from '../table-schema/types';
+import preprocess from './helper';
 
-function def2mysql(obj) {
-  const {tableName, columns, opts} = checkAndParse(obj);
+export function tableToMySQL(table: TableSchema) {
+  const {tableName, columns, opts} = preprocess(table);
   let createStat = `CREATE TABLE IF NOT EXISTS \`${tableName}\``;
   if (opts.dropIfExists) {
     createStat = `DROP TABLE IF EXISTS \`${tableName}\`;\n${createStat}`;
@@ -36,8 +37,8 @@ function def2mysql(obj) {
 
   let indexesStat = '';
   let hasPrimary = false;
-  if (obj.indexes) {
-    indexesStat = Object.entries(obj.indexes).map(([k, v]) => {
+  if (table.indexes) {
+    indexesStat = Object.entries(table.indexes).map(([k, v]) => {
       let stat = 'KEY';
       if (v.primary && !hasPrimary) {
         // If there are more than 1 indexes are set as primary, just use the first one
@@ -59,8 +60,8 @@ ${columnsStat}${indexesStat ? `,\n${indexesStat}` : ''}
 )${tableStat}`;
 }
 
-function def2pgsql(obj) {
-  const {tableName, columns, opts} = checkAndParse(obj);
+export function tableToPostgreSQL(table: TableSchema) {
+  const {tableName, columns, opts} = preprocess(table);
   let createStat = `CREATE TABLE IF NOT EXISTS ${tableName}`;
   if (opts.dropIfExists) {
     createStat = `DROP TABLE IF EXISTS ${tableName};\n${createStat}`;
@@ -99,10 +100,10 @@ function def2pgsql(obj) {
     .map((col) => `COMMENT ON COLUMN ${tableName}.${col.name} IS '${col.comment}'`)
     .join(';\n');
 
-  const indexStat = [];
+  const indexStat: string[] = [];
   const hasPrimary = false;
-  if (obj.indexes) {
-    Object.entries(obj.indexes).forEach(([k, v]) => {
+  if (table.indexes) {
+    Object.entries(table.indexes).forEach(([k, v]) => {
       const colStr = v.columns.join(',');
       let stat = 'INDEX';
       if (v.primary && !hasPrimary) {
@@ -126,8 +127,3 @@ ${indexStat.join(';\n')};
 ${commentStat};
 ${autoIncrement}`;
 }
-
-module.exports = {
-  def2mysql,
-  def2pgsql,
-};

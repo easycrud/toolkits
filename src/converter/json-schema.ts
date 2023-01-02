@@ -1,4 +1,12 @@
-const checkAndParse = require('./helper');
+import {TableSchema} from '../table-schema/types';
+import preprocess from './helper';
+
+interface Property {
+  title: string;
+  type: string;
+  'x-component'?: string;
+  'x-decorator'?: string;
+}
 
 const StringType = [
   // MySQL
@@ -25,14 +33,14 @@ const DateTimeType = [
 
 const TimeType = ['time', 'time with timezone', 'time without timezone'];
 
-function getSchemaTypeByDefType(type) {
+function getSchemaTypeByDefType(type: string) {
   if (NumberType.includes(type)) {
     return 'number';
   }
   return 'string';
 }
 
-function getFormByType(type) {
+function getFormByType(type: string) {
   if (StringType.includes(type)) {
     return {'x-component': 'Input'};
   }
@@ -61,8 +69,8 @@ function getFormByType(type) {
   return {'x-component': 'Input'};
 }
 
-function def2jsonschema(obj) {
-  const {columns} = checkAndParse(obj);
+export function tableToJsonSchema(table: TableSchema) {
+  const {columns} = preprocess(table);
   const properties = columns.reduce((curr, col) => {
     const key = col.alias || col.name;
     curr[key] = {
@@ -70,15 +78,15 @@ function def2jsonschema(obj) {
       type: getSchemaTypeByDefType(col.type),
     };
     return curr;
-  }, {});
+  }, {} as Record<string, Property>);
   return {
     type: 'object',
     properties,
   };
 }
 
-function def2formily(obj) {
-  const {columns} = checkAndParse(obj);
+export function tableToFormily(table: TableSchema) {
+  const {columns} = preprocess(table);
   const properties = columns.reduce((curr, col) => {
     const key = col.alias || col.name;
     curr[key] = {
@@ -88,14 +96,9 @@ function def2formily(obj) {
       ...getFormByType(col.type),
     };
     return curr;
-  }, {});
+  }, {} as Record<string, Property>);
   return {
     'type': 'object',
     'properties': properties,
   };
-};
-
-module.exports = {
-  def2jsonschema,
-  def2formily,
 };

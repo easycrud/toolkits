@@ -1,5 +1,6 @@
-const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
-const {getUserDef} = require('./helper');
+import {tableToMySQL, tableToPostgreSQL} from '../src/converter';
+import {getUserDef} from './helper';
+import {expect, test} from '@jest/globals';
 
 const mysql = `CREATE TABLE IF NOT EXISTS \`users\`(
 \`id\` INT(11) AUTO_INCREMENT NOT NULL,
@@ -7,13 +8,13 @@ const mysql = `CREATE TABLE IF NOT EXISTS \`users\`(
 \`email\` VARCHAR(512) NOT NULL COMMENT '邮箱',
 \`password\` VARCHAR(512) NOT NULL COMMENT '密码',
 \`update_time\` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+PRIMARY KEY id(\`id\`),
 UNIQUE KEY idx_user(\`username\`,\`email\`),
-KEY idx_email(\`email\`),
-PRIMARY KEY id(\`id\`)
+KEY idx_email(\`email\`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;`;
 
-test('def2mysql', async () => {
-  expect(def2mysql(await getUserDef())).toBe(mysql);
+test('table2MySQL', async () => {
+  expect(tableToMySQL(await getUserDef())).toBe(mysql);
 });
 
 const pgsql = `CREATE TABLE IF NOT EXISTS users(
@@ -32,17 +33,17 @@ COMMENT ON COLUMN users.password IS '密码';
 COMMENT ON COLUMN users.update_time IS '更新时间';
 `;
 
-test('def2pgsql', async () => {
-  expect(def2pgsql(await getUserDef())).toBe(pgsql);
+test('tableToPostgreSQL', async () => {
+  expect(tableToPostgreSQL(await getUserDef())).toBe(pgsql);
 });
 
 
-test('def2mysql wrong index', async () => {
+test('tableToMySQL wrong index', async () => {
   const wrongIdx = {
     columns: ['wrong_col'],
   };
   const wrongDef = Object.assign({}, await getUserDef());
-  wrongDef.indexes.wrong_idx = wrongIdx;
-  expect(() => def2mysql(wrongDef))
+  wrongDef.indexes!.wrong_idx = wrongIdx;
+  expect(() => tableToMySQL(wrongDef))
     .toThrowError('table indexes include column wrong_col that does not configuire in columns');
 });
