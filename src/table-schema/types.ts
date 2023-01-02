@@ -116,7 +116,7 @@ export interface TableSchema {
    */
   indexes?: Index;
   /**
-   * Extra options for table creation
+   * Extra options for table
    */
   options?: TableOptions;
   /**

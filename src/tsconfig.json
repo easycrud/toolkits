@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../lib/",
     "moduleResolution": "node",
     "target": "esnext",
-    "rootDir": ".",
-    "outDir": ".",
+    "module": "commonjs",
     "declaration": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -12,9 +13,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "composite": true
   },
-  "files": [
-    "package.json",
-  ]
+  "references": [
+    { "path": "../" }
+  ],
 }

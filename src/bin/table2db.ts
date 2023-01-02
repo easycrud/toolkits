@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
-const program = require('commander');
-const fs = require('fs');
-const pkg = require('../../package.json');
-const Parser = require('../lib/parser');
-const {def2mysql, def2pgsql} = require('../lib/converter/db.schema');
-const converter = {
-  mysql: def2mysql,
-  pgsql: def2pgsql,
+import {program} from 'commander';
+import fs from 'fs';
+import pkg from '../../package.json';
+import {tableToMySQL, tableToPostgreSQL} from '../converter';
+import {TableSchema} from '../table-schema';
+import {TableSchema as TypeTableSchema} from '../table-schema/types';
+const converter: {
+  [key: string]: (table: TypeTableSchema) => string;
+} = {
+  mysql: tableToMySQL,
+  pgsql: tableToPostgreSQL,
 };
 
 program
@@ -17,7 +20,7 @@ program
   .option('-t, --type [type]', 'set db type, just support mysql and pgsql currently')
   .parse(process.argv);
 
-const config = {
+const config: {[key:string]: string} = {
   path: '',
   out: 'stdout',
   type: 'mysql',
@@ -41,12 +44,17 @@ if (config.path) {
   process.exit(1);
 }
 
-const result = [];
-const parser = new Parser();
-parser.parse(config.path).then(() => {
-  parser.tables.forEach((t) => {
-    result.push(converter[config.type](t));
-  });
+const result: string[] = [];
+const tableSchema = new TableSchema();
+try {
+  const schemas = tableSchema.fromPath(config.path);
+  if (Array.isArray(schemas)) {
+    schemas.forEach((s) => {
+      result.push(converter[config.type](s));
+    });
+  } else {
+    result.push(converter[config.type](schemas));
+  }
 
   if (config.out === 'stdout') {
     console.log(result.join('\n\n'));
@@ -61,9 +69,9 @@ parser.parse(config.path).then(() => {
     console.log('output file success:', config.out);
     process.exit(0);
   });
-}).catch((err) => {
+} catch (err) {
   console.log('parse error:', err);
   process.exit(1);
-});
+};
 
 

@@ -1,8 +1,9 @@
-const {def2jsonschema, def2formily} = require('../lib/converter/json.schema');
-const {getUserDef} = require('./helper');
+import {tableToFormily, tableToJsonSchema} from '../src/converter';
+import {getUserDef} from './helper';
+import {expect, test} from '@jest/globals';
 
-test('def2jsonschema', async () => {
-  expect(def2jsonschema(await getUserDef())).toStrictEqual({
+test('tableToJsonSchema', async () => {
+  expect(tableToJsonSchema(await getUserDef())).toStrictEqual({
     'type': 'object',
     'properties': {
       'id': {
@@ -29,8 +30,8 @@ test('def2jsonschema', async () => {
   });
 });
 
-test('def2formily', async () => {
-  expect(def2formily(await getUserDef())).toStrictEqual({
+test('tableToFormily', async () => {
+  expect(tableToFormily(await getUserDef())).toStrictEqual({
     'type': 'object',
     'properties': {
       'id': {

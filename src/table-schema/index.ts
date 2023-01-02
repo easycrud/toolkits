@@ -6,8 +6,8 @@ import {
   IndexDefinition,
   Index,
 } from './types';
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 
 export function standardize(
@@ -58,7 +58,10 @@ export function standardize(
     ...schema,
     indexes,
     get pk(): string[] {
-      const pk = Object.values(this.indexes || {}).filter((index) => index.primary);
+      const pk: IndexDefinition[] = Object.values(
+        (indexes || {}) as Index,
+      )
+        .filter((index: IndexDefinition) => index.primary);
       if (pk.length > 0) {
         return pk[0].columns || [];
       }
