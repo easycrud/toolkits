@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/easycrud/toolkits#readme",
   "bin": {
-    "table2db": "lib/bin/table2db.js"
+    "schema2sql": "lib/bin/schema2sql.js"
   },
   "devDependencies": {
     "@formily/react": "^2.2.13",

@@ -1,7 +1,7 @@
 import {TableSchema} from '../table-schema/types';
 import preprocess from './helper';
 
-export function tableToMySQL(table: TableSchema) {
+export function schemaToMySQL(table: TableSchema) {
   const {tableName, columns, opts} = preprocess(table);
   let createStat = `CREATE TABLE IF NOT EXISTS \`${tableName}\``;
   if (opts.dropIfExists) {
@@ -60,7 +60,7 @@ ${columnsStat}${indexesStat ? `,\n${indexesStat}` : ''}
 )${tableStat}`;
 }
 
-export function tableToPostgreSQL(table: TableSchema) {
+export function schemaToPostgreSQL(table: TableSchema) {
   const {tableName, columns, opts} = preprocess(table);
   let createStat = `CREATE TABLE IF NOT EXISTS ${tableName}`;
   if (opts.dropIfExists) {

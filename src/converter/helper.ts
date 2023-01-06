@@ -12,10 +12,9 @@ export default function preprocess(table: TableSchema) {
     });
   }
   const opts = {
-    overwrite: false,
     engine: 'InnoDB',
     autoIncrement: 0,
-    ...table.options,
+    ...table.options?.sql,
   };
   return {tableName: table.tableName, columns: table.columns, opts};
 };

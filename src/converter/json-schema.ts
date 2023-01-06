@@ -69,7 +69,7 @@ function getFormByType(type: string) {
   return {'x-component': 'Input'};
 }
 
-export function tableToJsonSchema(table: TableSchema) {
+export function schemaToJsonSchema(table: TableSchema) {
   const {columns} = preprocess(table);
   const properties = columns.reduce((curr, col) => {
     const key = col.alias || col.name;
@@ -85,7 +85,7 @@ export function tableToJsonSchema(table: TableSchema) {
   };
 }
 
-export function tableToFormily(table: TableSchema) {
+export function schemaToFormily(table: TableSchema) {
   const {columns} = preprocess(table);
   const properties = columns.reduce((curr, col) => {
     const key = col.alias || col.name;

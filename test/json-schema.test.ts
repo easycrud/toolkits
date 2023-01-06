@@ -1,9 +1,9 @@
-import {tableToFormily, tableToJsonSchema} from '../src/converter';
+import {schemaToFormily, schemaToJsonSchema} from '../src/converter';
 import {getUserDef} from './helper';
 import {expect, test} from '@jest/globals';
 
-test('tableToJsonSchema', async () => {
-  expect(tableToJsonSchema(await getUserDef())).toStrictEqual({
+test('schemaToJsonSchema', async () => {
+  expect(schemaToJsonSchema(await getUserDef())).toStrictEqual({
     'type': 'object',
     'properties': {
       'id': {
@@ -30,8 +30,8 @@ test('tableToJsonSchema', async () => {
   });
 });
 
-test('tableToFormily', async () => {
-  expect(tableToFormily(await getUserDef())).toStrictEqual({
+test('schemaToFormily', async () => {
+  expect(schemaToFormily(await getUserDef())).toStrictEqual({
     'type': 'object',
     'properties': {
       'id': {

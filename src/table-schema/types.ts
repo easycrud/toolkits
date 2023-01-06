@@ -81,19 +81,21 @@ export interface TableOptions {
    * Notice: the alias property will be use first if it is set.
    */
   columnFormatter?: 'snake' | 'camel' | 'kebab' | 'none' | columnFormatter;
-  /* The following properties are the extra options for table creation */
-  /**
-   * If true, drop table if it exists before create. Default false.
-   */
-  dropIfExists?: boolean;
-  /**
-   * Set table engine. Default 'InnoDB'.
-   */
-  engine?: string;
-  /**
-   * Set where the auto increment key start from.
-   */
-  autoIncrement?: number;
+  /* The following properties are the extra options for sql statement */
+  sql: {
+    /**
+     * If true, drop table if it exists before create. Default false.
+     */
+    dropIfExists?: boolean;
+    /**
+      * Set table engine. Default 'InnoDB'.
+      */
+    engine?: string;
+    /**
+      * Set where the auto increment key start from.
+      */
+    autoIncrement?: number;
+  }
 }
 /**
  * Describe a table using JSON
