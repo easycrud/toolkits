@@ -19,7 +19,7 @@ export interface ColumnDefinition {
    */
   primary?: boolean;
   /**
-   * If a column is set to auto increment.  Default false.
+   * If a column is set to auto increment. Default false.
    */
   autoIncrement?: boolean;
   /**
@@ -42,6 +42,10 @@ export interface ColumnDefinition {
    * The alias of a column, usually used in sql statements and response messages.
    */
   alias?: string;
+  /**
+   * Don't let the column used in APIs or displayed in front end. Default is false.
+   */
+  hide?: boolean;
 }
 
 /**
