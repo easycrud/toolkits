@@ -1,8 +1,8 @@
 import {UnstrictTableSchema} from '../table-schema/types';
 import preprocess from './helper';
 
-export function schemaToMySQL(table: UnstrictTableSchema) {
-  const {std, opts} = preprocess(table);
+export function schemaToMySQL(schema: UnstrictTableSchema) {
+  const {std, opts} = preprocess(schema);
   const tableName = std.tableName;
   const columns = std.columns;
   let createStat = `CREATE TABLE IF NOT EXISTS \`${tableName}\``;
@@ -62,8 +62,8 @@ ${columnsStat}${indexesStat ? `,\n${indexesStat}` : ''}
 )${tableStat}`;
 }
 
-export function schemaToPostgreSQL(table: UnstrictTableSchema) {
-  const {std, opts} = preprocess(table);
+export function schemaToPostgreSQL(schema: UnstrictTableSchema) {
+  const {std, opts} = preprocess(schema);
   const tableName = std.tableName;
   const columns = std.columns;
   let createStat = `CREATE TABLE IF NOT EXISTS ${tableName}`;

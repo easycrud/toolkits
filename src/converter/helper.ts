@@ -1,8 +1,8 @@
 import {standardize} from '../table-schema';
 import {UnstrictTableSchema} from '../table-schema/types';
 
-export default function preprocess(table: UnstrictTableSchema) {
-  const std = standardize(table);
+export default function preprocess(schema: UnstrictTableSchema) {
+  const std = standardize(schema);
   const columnNames = std.columns.map((c) => c.name);
   if (std.indexes) {
     Object.values(std.indexes).forEach((idx) => {
