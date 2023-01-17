@@ -14,10 +14,9 @@ export default function preprocess(table: UnstrictTableSchema) {
     });
   }
   const opts = {
-    overwrite: false,
     engine: 'InnoDB',
     autoIncrement: 0,
-    ...std.options,
+    ...std.options?.sql,
   };
   return {std, opts};
 };

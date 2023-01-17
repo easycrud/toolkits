@@ -1,6 +1,6 @@
 import {makeExecutableSchema} from '@graphql-tools/schema';
 import {expect, test} from '@jest/globals';
-import {tableToGraphQL} from '../src/converter';
+import {schemaToGraphQL} from '../src/converter';
 import {getUserDef} from './helper';
 
 const schema = makeExecutableSchema({
@@ -15,6 +15,6 @@ const schema = makeExecutableSchema({
   `,
 });
 
-test('tableToGraphQL', async () => {
-  expect(tableToGraphQL(await getUserDef())).toEqual(schema);
+test('schemaToGraphQL', async () => {
+  expect(schemaToGraphQL(await getUserDef())).toEqual(schema);
 });

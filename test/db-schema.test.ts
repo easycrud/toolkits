@@ -1,4 +1,4 @@
-import {tableToMySQL, tableToPostgreSQL} from '../src/converter';
+import {schemaToMySQL, schemaToPostgreSQL} from '../src/converter';
 import {getUserDef} from './helper';
 import {expect, test} from '@jest/globals';
 
@@ -14,7 +14,7 @@ KEY idx_email(\`email\`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;`;
 
 test('table2MySQL', async () => {
-  expect(tableToMySQL(await getUserDef())).toBe(mysql);
+  expect(schemaToMySQL(await getUserDef())).toBe(mysql);
 });
 
 const pgsql = `CREATE TABLE IF NOT EXISTS users(
@@ -33,17 +33,17 @@ COMMENT ON COLUMN users.password IS '密码';
 COMMENT ON COLUMN users.update_time IS '更新时间';
 `;
 
-test('tableToPostgreSQL', async () => {
-  expect(tableToPostgreSQL(await getUserDef())).toBe(pgsql);
+test('schemaToPostgreSQL', async () => {
+  expect(schemaToPostgreSQL(await getUserDef())).toBe(pgsql);
 });
 
 
-test('tableToMySQL wrong index', async () => {
+test('schemaToMySQL wrong index', async () => {
   const wrongIdx = {
     columns: ['wrong_col'],
   };
   const wrongDef = Object.assign({}, await getUserDef());
   wrongDef.indexes!.wrong_idx = wrongIdx;
-  expect(() => tableToMySQL(wrongDef))
+  expect(() => schemaToMySQL(wrongDef))
     .toThrowError('table indexes include column wrong_col that does not configuire in columns');
 });

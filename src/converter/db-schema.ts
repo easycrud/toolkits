@@ -1,7 +1,7 @@
 import {UnstrictTableSchema} from '../table-schema/types';
 import preprocess from './helper';
 
-export function tableToMySQL(table: UnstrictTableSchema) {
+export function schemaToMySQL(table: UnstrictTableSchema) {
   const {std, opts} = preprocess(table);
   const tableName = std.tableName;
   const columns = std.columns;
@@ -62,7 +62,7 @@ ${columnsStat}${indexesStat ? `,\n${indexesStat}` : ''}
 )${tableStat}`;
 }
 
-export function tableToPostgreSQL(table: UnstrictTableSchema) {
+export function schemaToPostgreSQL(table: UnstrictTableSchema) {
   const {std, opts} = preprocess(table);
   const tableName = std.tableName;
   const columns = std.columns;

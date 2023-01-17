@@ -69,7 +69,7 @@ function getFormByType(type: string) {
   return {'x-component': 'Input'};
 }
 
-export function tableToJsonSchema(table: UnstrictTableSchema) {
+export function schemaToJsonSchema(table: UnstrictTableSchema) {
   const {std} = preprocess(table);
   const properties = std.columns.reduce((curr, col) => {
     const key = col.alias || col.name;
@@ -85,7 +85,7 @@ export function tableToJsonSchema(table: UnstrictTableSchema) {
   };
 }
 
-export function tableToFormily(table: UnstrictTableSchema) {
+export function schemaToFormily(table: UnstrictTableSchema) {
   const {std} = preprocess(table);
   const properties = std.columns.reduce((curr, col) => {
     const key = col.alias || col.name;

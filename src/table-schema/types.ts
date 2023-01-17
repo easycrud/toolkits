@@ -19,7 +19,7 @@ export interface ColumnDefinition {
    */
   primary?: boolean;
   /**
-   * If a column is set to auto increment.  Default false.
+   * If a column is set to auto increment. Default false.
    */
   autoIncrement?: boolean;
   /**
@@ -42,6 +42,10 @@ export interface ColumnDefinition {
    * The alias of a column, usually used in sql statements and response messages.
    */
   alias?: string;
+  /**
+   * Don't let the column used in APIs or displayed in front end. Default is false.
+   */
+  hide?: boolean;
 }
 
 /**
@@ -81,19 +85,21 @@ export interface TableOptions {
    * Notice: the alias property will be use first if it is set.
    */
   columnFormatter?: 'snake' | 'camel' | 'kebab' | 'none' | columnFormatter;
-  /* The following properties are the extra options for table creation */
-  /**
-   * If true, drop table if it exists before create. Default false.
-   */
-  dropIfExists?: boolean;
-  /**
-   * Set table engine. Default 'InnoDB'.
-   */
-  engine?: string;
-  /**
-   * Set where the auto increment key start from.
-   */
-  autoIncrement?: number;
+  /* The following properties are the extra options for sql statement */
+  sql: {
+    /**
+     * If true, drop table if it exists before create. Default false.
+     */
+    dropIfExists?: boolean;
+    /**
+      * Set table engine. Default 'InnoDB'.
+      */
+    engine?: string;
+    /**
+      * Set where the auto increment key start from.
+      */
+    autoIncrement?: number;
+  }
 }
 /**
  * Describe a table using JSON

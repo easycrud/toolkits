@@ -3,14 +3,14 @@
 import {program} from 'commander';
 import fs from 'fs';
 import pkg from '../../package.json';
-import {tableToMySQL, tableToPostgreSQL} from '../converter';
+import {schemaToMySQL, schemaToPostgreSQL} from '../converter';
 import {TableSchema} from '../table-schema';
 import {TableSchema as TypeTableSchema} from '../table-schema/types';
 const converter: {
   [key: string]: (table: TypeTableSchema) => string;
 } = {
-  mysql: tableToMySQL,
-  pg: tableToPostgreSQL,
+  mysql: schemaToMySQL,
+  pg: schemaToPostgreSQL,
 };
 
 program
