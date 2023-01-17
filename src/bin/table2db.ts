@@ -10,14 +10,14 @@ const converter: {
   [key: string]: (table: TypeTableSchema) => string;
 } = {
   mysql: tableToMySQL,
-  pgsql: tableToPostgreSQL,
+  pg: tableToPostgreSQL,
 };
 
 program
   .version(pkg.version)
   .option('-p, --path [path]', 'set file path')
   .option('-o, --out [out]', 'set output file path, default stdout')
-  .option('-t, --type [type]', 'set db type, just support mysql and pgsql currently')
+  .option('-t, --type [type]', 'set db type, just support mysql and pg currently')
   .parse(process.argv);
 
 const config: {[key:string]: string} = {

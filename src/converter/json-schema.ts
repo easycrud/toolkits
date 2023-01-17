@@ -1,4 +1,4 @@
-import {TableSchema} from '../table-schema/types';
+import {UnstrictTableSchema} from '../table-schema/types';
 import preprocess from './helper';
 
 interface Property {
@@ -69,9 +69,9 @@ function getFormByType(type: string) {
   return {'x-component': 'Input'};
 }
 
-export function tableToJsonSchema(table: TableSchema) {
-  const {columns} = preprocess(table);
-  const properties = columns.reduce((curr, col) => {
+export function tableToJsonSchema(table: UnstrictTableSchema) {
+  const {std} = preprocess(table);
+  const properties = std.columns.reduce((curr, col) => {
     const key = col.alias || col.name;
     curr[key] = {
       title: col.comment || key,
@@ -85,9 +85,9 @@ export function tableToJsonSchema(table: TableSchema) {
   };
 }
 
-export function tableToFormily(table: TableSchema) {
-  const {columns} = preprocess(table);
-  const properties = columns.reduce((curr, col) => {
+export function tableToFormily(table: UnstrictTableSchema) {
+  const {std} = preprocess(table);
+  const properties = std.columns.reduce((curr, col) => {
     const key = col.alias || col.name;
     curr[key] = {
       'title': col.comment || key,

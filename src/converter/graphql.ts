@@ -1,5 +1,5 @@
-import {TableSchema} from '../table-schema/types';
+import {UnstrictTableSchema} from '../table-schema/types';
 
-export function tableToGraphQL(_table: TableSchema) {
+export function tableToGraphQL(_table: UnstrictTableSchema) {
   // TODO (qiayang): implement this function
 }

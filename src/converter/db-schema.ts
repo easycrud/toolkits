@@ -1,8 +1,10 @@
-import {TableSchema} from '../table-schema/types';
+import {UnstrictTableSchema} from '../table-schema/types';
 import preprocess from './helper';
 
-export function tableToMySQL(table: TableSchema) {
-  const {tableName, columns, opts} = preprocess(table);
+export function tableToMySQL(table: UnstrictTableSchema) {
+  const {std, opts} = preprocess(table);
+  const tableName = std.tableName;
+  const columns = std.columns;
   let createStat = `CREATE TABLE IF NOT EXISTS \`${tableName}\``;
   if (opts.dropIfExists) {
     createStat = `DROP TABLE IF EXISTS \`${tableName}\`;\n${createStat}`;
@@ -37,8 +39,8 @@ export function tableToMySQL(table: TableSchema) {
 
   let indexesStat = '';
   let hasPrimary = false;
-  if (table.indexes) {
-    indexesStat = Object.entries(table.indexes).map(([k, v]) => {
+  if (std.indexes) {
+    indexesStat = Object.entries(std.indexes).map(([k, v]) => {
       let stat = 'KEY';
       if (v.primary && !hasPrimary) {
         // If there are more than 1 indexes are set as primary, just use the first one
@@ -60,8 +62,10 @@ ${columnsStat}${indexesStat ? `,\n${indexesStat}` : ''}
 )${tableStat}`;
 }
 
-export function tableToPostgreSQL(table: TableSchema) {
-  const {tableName, columns, opts} = preprocess(table);
+export function tableToPostgreSQL(table: UnstrictTableSchema) {
+  const {std, opts} = preprocess(table);
+  const tableName = std.tableName;
+  const columns = std.columns;
   let createStat = `CREATE TABLE IF NOT EXISTS ${tableName}`;
   if (opts.dropIfExists) {
     createStat = `DROP TABLE IF EXISTS ${tableName};\n${createStat}`;
@@ -102,8 +106,8 @@ export function tableToPostgreSQL(table: TableSchema) {
 
   const indexStat: string[] = [];
   const hasPrimary = false;
-  if (table.indexes) {
-    Object.entries(table.indexes).forEach(([k, v]) => {
+  if (std.indexes) {
+    Object.entries(std.indexes).forEach(([k, v]) => {
       const colStr = v.columns.join(',');
       let stat = 'INDEX';
       if (v.primary && !hasPrimary) {
