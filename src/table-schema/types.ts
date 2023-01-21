@@ -71,7 +71,6 @@ export interface IndexDefinition {
 }
 export type Index = { [key: string]: IndexDefinition };
 
-type columnFormatter = (col: string) => string;
 /**
  * Extra options for table definition
  */
@@ -84,7 +83,7 @@ export interface TableOptions {
    * The method use to format the column names. Default camel.
    * Notice: the alias property will be use first if it is set.
    */
-  columnFormatter?: 'snake' | 'camel' | 'kebab' | 'none' | columnFormatter;
+  columnFormatter?: 'snake' | 'camel' | 'kebab' | 'none';
   /* The following properties are the extra options for sql statement */
   sql: {
     /**
